@@ -1,0 +1,20 @@
+# robots.txt для сайта кофейни CoffeeDoo
+
+# Основные правила для всех поисковых роботов
+User-agent: *
+Disallow: /admin
+Disallow: /login
+Disallow: /register
+Disallow: /account
+Disallow: /*?
+
+# Разрешаем индексацию всех основных страниц сайта
+Allow: /
+Allow: /coffee
+Allow: /desserts
+Allow: /product/
+Allow: /contacts
+
+# Указываем расположение Sitemap
+Sitemap: https://coffeedoo.ru/sitemap.xml
+

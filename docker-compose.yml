@@ -1,0 +1,44 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "${APP_PUBLISHED_PORT:-10001}:80"
+    volumes:
+      - ./:/var/www/html
+    environment:
+      APP_NAME: ${APP_NAME:-CoffeeDoo}
+      APP_ENV: ${APP_ENV:-local}
+      APP_DEBUG: ${APP_DEBUG:-true}
+      APP_URL: ${APP_URL:-http://localhost:10001}
+      DB_CONNECTION: ${DB_CONNECTION:-pgsql}
+      DB_HOST: ${DB_HOST:-postgres}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_DATABASE: ${DB_DATABASE:-coffeedoo}
+      DB_USERNAME: ${DB_USERNAME:-coffeedoo}
+      DB_PASSWORD: ${DB_PASSWORD:-secret}
+      SESSION_DRIVER: ${SESSION_DRIVER:-database}
+      CACHE_STORE: ${CACHE_STORE:-database}
+      QUEUE_CONNECTION: ${QUEUE_CONNECTION:-sync}
+      FILESYSTEM_DISK: ${FILESYSTEM_DISK:-public}
+      ADMIN_NAME: ${ADMIN_NAME:-Администратор CoffeeDoo}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@coffeedoo.local}
+      ADMIN_PHONE: ${ADMIN_PHONE:-+79990000000}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-Admin123!}
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-coffeedoo}
+      POSTGRES_USER: ${DB_USERNAME:-coffeedoo}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+    ports:
+      - "127.0.0.1:${DB_PUBLISHED_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
