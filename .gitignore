@@ -60,3 +60,5 @@ compose.override.yml
 *.swp
 *.swo
 *.bak
+
+.DS_Store
